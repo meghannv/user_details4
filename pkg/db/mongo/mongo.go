@@ -25,6 +25,8 @@ func (ss *Mongo) InjectUser(userr model.User, ctx context.Context) (string, erro
 	operation := options.Update().SetUpsert(true)
 
 	result, err := collection.UpdateOne(ctx, filter, update, operation)
-
-	return nil
+	if err != nil{
+		return "", err
+	}
+	return "user details inserted" ,nil
 }
