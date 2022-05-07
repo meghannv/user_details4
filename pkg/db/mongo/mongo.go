@@ -17,3 +17,14 @@ func (ss *Mongo) FindUser(userId string, ctx context.Context) (model.User, error
 	}
 	return user, nil
 }
+
+func (ss *Mongo) InjectUser(userr model.User, ctx context.Context) (string, error){
+	collection := ss.Database.Collection(ss.Collection["userDetails"])
+	filter := bson.M{"userId":userDetails.userId}
+	update := bson.M{"$set": &userDetails}
+	operation := options.Update().SetUpsert(true)
+
+	result, err := collection.UpdateOne(ctx, filter, update, operation)
+
+	return nil
+}
